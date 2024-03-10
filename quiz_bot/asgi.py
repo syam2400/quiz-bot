@@ -19,7 +19,8 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'quiz_bot.settings')
 from core.routing import websocket_urlpatterns
 
 application = ProtocolTypeRouter(
-    {
+    {  
+       
         "websocket": AllowedHostsOriginValidator(
             AuthMiddlewareStack(URLRouter(websocket_urlpatterns))
         ),

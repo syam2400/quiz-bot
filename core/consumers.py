@@ -9,6 +9,7 @@ class ChatConsumer(WebsocketConsumer):
     def connect(self):
         self.group_name = self.scope['session'].session_key
 
+
         # Join room group
         async_to_sync(self.channel_layer.group_add)(
             self.group_name,
@@ -29,6 +30,7 @@ class ChatConsumer(WebsocketConsumer):
 
         text_data_json = json.loads(text_data)
         user_message = text_data_json['message']
+    
 
         if user_message == '/reset':
             self.scope['session']['current_question_id'] = None

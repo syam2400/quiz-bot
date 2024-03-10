@@ -1,3 +1,4 @@
+
 """
 Django settings for quiz_bot project.
 
@@ -11,6 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 import os
 from pathlib import Path
+from django.core.exceptions import ImproperlyConfigured
 
 
 def env(key, default=None):
@@ -50,6 +52,7 @@ if DEBUG:
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -59,6 +62,7 @@ INSTALLED_APPS = [
     'channels',
     'core',
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -93,12 +97,9 @@ WSGI_APPLICATION = "quiz_bot.wsgi.application"
 ASGI_APPLICATION = "quiz_bot.asgi.application"
 
 CHANNEL_LAYERS = {
-    "default": {
-        "BACKEND": "channels_redis.core.RedisChannelLayer",
-        "CONFIG": {
-            "hosts": [("redis", 6379)],
-        },
-    },
+	"default": {
+		"BACKEND": "channels.layers.InMemoryChannelLayer"
+	}
 }
 
 
@@ -110,8 +111,8 @@ DATABASES = {
         'ENGINE': env('DB_ENGINE', 'django.db.backends.postgresql'),
         'NAME': env('DB_NAME', 'postgres'),
         'USER': env('DB_USER', 'postgres'),
-        'PASSWORD': env('DB_PASSWORD', 'password'),
-        'HOST': env('DB_HOST', 'db'),
+        'PASSWORD': env('DB_PASSWORD', 'root'),
+        'HOST': env('DB_HOST', 'localhost'),
         'PORT': env('DB_PORT', '5432'),
     }
 }
